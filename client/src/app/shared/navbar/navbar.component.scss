@@ -1,0 +1,40 @@
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 56px;
+  padding: 0 20px;
+  background: #1f2937;
+  color: #fff;
+  font-family: system-ui, sans-serif;
+  box-sizing: border-box;
+
+  a { color: #cbd5e1; text-decoration: none; font-size: 14px; }
+  a.active, a:hover { color: #fff; }
+  .logo { font-weight: 700; font-size: 16px; color: #fff; }
+  .links { display: flex; gap: 18px; }
+  .right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+  .hello { font-size: 13px; color: #cbd5e1; }
+
+  button, .btn {
+    padding: 6px 12px;
+    border: 1px solid #64748b;
+    border-radius: 6px;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 800px) {
+  .nav {
+    height: auto;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    padding: 8px 12px;
+
+    .links { order: 3; width: 100%; gap: 14px; flex-wrap: wrap; }
+    .right { margin-left: auto; }
+    .hello { display: none; }
+  }
+}

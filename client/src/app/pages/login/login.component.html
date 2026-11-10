@@ -1,0 +1,27 @@
+<div class="wrap">
+  <form class="card" (ngSubmit)="submit()">
+    <h2>{{ mode === 'login' ? 'Login' : 'Create account' }}</h2>
+
+    @if (mode === 'register') {
+      <label>Name</label>
+      <input type="text" name="name" [(ngModel)]="name" placeholder="Your name" />
+    }
+
+    <label>Email</label>
+    <input type="email" name="email" [(ngModel)]="email" placeholder="you@example.com" />
+
+    <label>Password</label>
+    <input type="password" name="password" [(ngModel)]="password" placeholder="Min 6 characters" />
+
+    @if (error) { <p class="error">{{ error }}</p> }
+
+    <button type="submit" class="primary">
+      {{ mode === 'login' ? 'Login' : 'Register' }}
+    </button>
+
+    <p class="switch">
+      {{ mode === 'login' ? 'New user?' : 'Already have an account? }}
+      <a (click)="switchMode()">{{ mode === 'login' ? 'Register' : 'Login' }}</a>
+    </p>
+  </form>
+</div>

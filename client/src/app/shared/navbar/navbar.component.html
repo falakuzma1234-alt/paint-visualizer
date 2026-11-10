@@ -1,0 +1,23 @@
+<nav class="nav">
+  <a class="logo" routerLink="/studio">🎨 Paint Visualizer</a>
+
+  <div class="links">
+    <a routerLink="/studio" routerLinkActive="active">Studio</a>
+    <a routerLink="/help" routerLinkActive="active">How to Use</a>
+    @if (auth.user()) {
+      <a routerLink="/dashboard" routerLinkActive="active">My Designs</a>
+    }
+    @if (auth.isAdmin) {
+  <a routerLink="/admin" routerLinkActive="active">Admin</a>
+}
+  </div>
+
+  <div class="right">
+    @if (auth.user(); as u) {
+      <span class="hello">Hi, {{ u.name }}</span>
+      <button (click)="logout()">Logout</button>
+    } @else {
+      <a routerLink="/login" class="btn">Login / Register</a>
+    }
+  </div>
+</nav>

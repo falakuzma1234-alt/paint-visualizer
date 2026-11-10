@@ -1,0 +1,77 @@
+<div class="page">
+  <h2>Admin Panel</h2>
+
+  <div class="tabs">
+    <button [class.on]="tab() === 'stats'" (click)="tab.set('stats')">Dashboard</button>
+    <button [class.on]="tab() === 'colors'" (click)="tab.set('colors')">Colours</button>
+    <button [class.on]="tab() === 'users'" (click)="tab.set('users')">Users</button>
+  </div>
+
+  @if (tab() === 'stats') {
+    @if (stats(); as s) {
+      <div class="stats">
+        <div class="stat"><b>{{ s.users }}</b><span>Users</span></div>
+        <div class="stat"><b>{{ s.projects }}</b><span>Designs saved</span></div>
+        <div class="stat"><b>{{ s.colors }}</b><span>Colours</span></div>
+      </div>
+
+      <h3>Recent designs</h3>
+      <table>
+        <tr><th>Title</th><th>User</th><th>Date</th></tr>
+        @for (p of s.recent; track p._id) {
+          <tr>
+            <td>{{ p.title }}</td>
+            <td>{{ p.userId?.name }} ({{ p.userId?.email }})</td>
+            <td>{{ p.createdAt | date: 'medium' }}</td>
+          </tr>
+        }
+      </table>
+    } @else {
+      <p class="err">{{ error() || 'Loading...' }}</p>
+    }
+  }
+
+  @if (tab() === 'colors') {
+    <div class="form">
+      <h3>{{ editingId ? 'Edit Colour' : 'Add New Colour' }}</h3>
+      <input [(ngModel)]="form.name" name="name" placeholder="Name (e.g., Ocean Blue)" />
+      <input type="color" [(ngModel)]="form.hex" name="picker" />
+      <input [(ngModel)]="form.hex" name="hex" placeholder="#RRGGBB" />
+      <input [(ngModel)]="form.category" name="category" placeholder="Category (e.g., Blues)" />
+      <input [(ngModel)]="form.brand" name="brand" placeholder="Brand (optional)" />
+      <button class="primary" (click)="save()">{{ editingId ? 'Update' : 'Add' }}</button>
+      @if (editingId) { <button (click)="reset()">Cancel</button> }
+      @if (error()) { <p class="err">{{ error() }}</p> }
+    </div>
+
+    <div class="color-grid">
+      @for (c of colors(); track c._id) {
+        <div class="color-card">
+          <span class="sw" [style.background]="c.hex"></span>
+          <div class="txt">
+            <b>{{ c.name }}</b>
+            <small>{{ c.hex }} · {{ c.category }}</small>
+          </div>
+          <div class="btns">
+            <button (click)="edit(c)">Edit</button>
+            <button class="del" (click)="remove(c._id!)">✕</button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  @if (tab() === 'users') {
+    <table>
+      <tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th></tr>
+      @for (u of users(); track u._id) {
+        <tr>
+          <td>{{ u.name }}</td>
+          <td>{{ u.email }}</td>
+          <td>{{ u.role }}</td>
+          <td>{{ u.createdAt | date: 'mediumDate' }}</td>
+        </tr>
+      }
+    </table>
+  }
+</div>

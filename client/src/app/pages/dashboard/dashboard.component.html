@@ -1,0 +1,31 @@
+<div class="page">
+  <h2>My Designs</h2>
+
+  @if (loading()) {
+    <p>Loading...</p>
+  } @else if (!projects().length) {
+    <p>Abhi koi design save nahi hua. <a routerLink="/studio">Studio</a> mein banao!</p>
+  } @else {
+    <div class="grid">
+      @for (p of projects(); track p._id) {
+        <div class="card">
+          <img [src]="imgUrl(p)" [alt]="p.title" />
+          <div class="info">
+            <b>{{ p.title }}</b>
+            <small>{{ p.createdAt | date: 'mediumDate' }}</small>
+            <div class="dots">
+              @for (w of p.walls; track $index) {
+                <span class="dot" [style.background]="w.color"></span>
+              }
+            </div>
+            <div class="actions">
+              <a [href]="downloadUrl(p)" target="_blank" download>Open</a>
+              <a [routerLink]="['/studio', p._id]">Edit</a>
+              <button (click)="remove(p._id)">Delete</button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

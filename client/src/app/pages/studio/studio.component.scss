@@ -1,0 +1,149 @@
+.studio {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  font-family: system-ui, sans-serif;
+}
+
+.panel {
+  flex: 0 0 300px;
+  width: 300px;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 16px;
+  overflow-y: auto;
+  background: #f6f7f9;
+  border-right: 1px solid #ddd;
+
+  section { margin-bottom: 20px; }
+  h2 { margin: 0 0 12px; font-size: 18px; }
+  h3 { margin: 0 0 8px; font-size: 14px; }
+  .hint { font-size: 12px; color: #666; }
+  .row { display: flex; gap: 6px; flex-wrap: wrap; }
+  label { display: block; margin: 10px 0 4px; font-size: 13px; }
+  input[type='range'] { width: 100%; }
+
+  button {
+    padding: 6px 10px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    &:disabled { opacity: 0.4; cursor: not-allowed; }
+  }
+  .primary {
+    width: 100%;
+    margin-top: 10px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 10px;
+  }
+  .check { display: flex; gap: 6px; align-items: center; }
+  .disclaimer { font-size: 11px; color: #a15c00; }
+}
+
+.wall-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    margin-bottom: 4px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 13px;
+
+    &.active { border-color: #2563eb; background: #eaf1ff; }
+    .dot { width: 14px; height: 14px; border-radius: 50%; border: 1px solid #999; }
+    .del { margin-left: auto; padding: 0 6px; border: none; background: none; cursor: pointer; }
+  }
+}
+
+.swatches {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+
+  .swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    padding: 0;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px #aaa;
+    &.active { box-shadow: 0 0 0 3px #2563eb; }
+  }
+}
+
+.canvas-area {
+  flex: 1 1 0;
+  min-width: 0;          // zaroori: warna badi image panel ko dhakel deti hai
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #222;
+  overflow: auto;
+  padding: 16px;
+
+  canvas {
+    max-width: 100%;
+    max-height: calc(100vh - 32px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    cursor: crosshair;
+    background: #000;
+    &.compare { cursor: ew-resize; }
+  }
+  .hidden { display: none; }
+  .placeholder { color: #aaa; }
+}
+
+.cat-select {
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  background: #fff;
+}
+
+// Tablet / chhoti screen: panel upar, canvas neeche
+@media (max-width: 900px) {
+  .studio {
+    flex-direction: column;
+    height: auto;
+    min-height: calc(100vh - 56px);
+    overflow: visible;
+  }
+
+  .panel {
+    flex: none;
+    width: 100%;
+    height: auto;
+    max-height: 45vh;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .canvas-area {
+    flex: none;
+    width: 100%;
+    height: auto;
+    min-height: 55vh;
+    padding: 8px;
+
+    canvas { max-height: 70vh; 
+    touch-action: manipulation; }
+  }
+}

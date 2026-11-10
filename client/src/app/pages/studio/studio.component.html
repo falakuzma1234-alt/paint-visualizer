@@ -1,0 +1,97 @@
+<div class="studio">
+  <aside class="panel">
+    <h2>🎨 Paint Visualizer</h2>
+
+    <section>
+      <h3>1. Room photo</h3>
+      <input type="file" accept="image/png, image/jpeg" (change)="onFileSelected($event)" />
+    </section>
+
+    <section>
+      <h3>2. Select wall</h3>
+      <p class="hint">
+        Click on the corners of a wall in the image. Click the first (green) point again to close the wall.
+      </p>
+      <div class="row">
+        <button (click)="finishWall()" [disabled]="currentPoints.length < 3">Finish wall</button>
+        <button (click)="undoPoint()" [disabled]="!currentPoints.length">Undo point</button>
+        <button (click)="undoWall()" [disabled]="!walls.length">Undo wall</button>
+      </div>
+    </section>
+
+<section>
+  <h3>My walls</h3>
+  <p class="hint" *ngIf="!walls.length">No wall selected yet.</p>
+  <ul class="wall-list">
+    <li
+      *ngFor="let w of walls; let i = index"
+      [class.active]="i === activeIndex"
+      (click)="selectWall(i)"
+    >
+      <span class="dot" [style.background]="w.color"></span>
+      Wall {{ i + 1 }}
+      <button class="del" (click)="deleteWall(i); $event.stopPropagation()">✕</button>
+    </li>
+  </ul>
+</section>
+
+    <section>
+      <h3>3. Colour</h3>
+      <select [(ngModel)]="selectedCategory" class="cat-select">
+  <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+</select>
+
+<div class="swatches">
+  <button
+    *ngFor="let c of filteredColors"
+    class="swatch"
+    [style.background]="c.hex"
+    [title]="c.name + ' (' + c.hex + ')'"
+    [class.active]="c.hex === color"
+    (click)="pickColor(c.hex)"
+  ></button>
+</div>
+<p class="hint">Selected colour: <b>{{ color }}</b></p>
+      <input type="color" [(ngModel)]="color" (ngModelChange)="applyToActive()" />
+
+      <label>Opacity: {{ opacity | number: '1.0-2' }}</label>
+      <input
+        type="range" min="0.1" max="1" step="0.05"
+        [(ngModel)]="opacity" (ngModelChange)="applyToActive()"
+      />
+    </section>
+
+<section>
+  <h3>4. Preview</h3>
+  <button (click)="toggleCompare()" [disabled]="!walls.length">
+    {{ compareMode ? 'Close slider' : 'Before / After slider' }}
+  </button>
+  <button class="primary" (click)="download()" [disabled]="!walls.length">Download image</button>
+<button class="primary" (click)="save()" [disabled]="!walls.length || saving">
+  {{ saving ? 'Saving...' : (editingId ? 'Update design' : 'Save design') }}
+</button>
+<p class="hint" *ngIf="saveMsg">{{ saveMsg }}</p>
+</section>
+
+    <p class="disclaimer">
+      ⚠️ ⚠️ The final result may differ due to lighting, screen calibration and wall texture.
+    </p>
+  </aside>
+
+  <main class="canvas-area">
+    <p *ngIf="!hasImage" class="placeholder">Upload a room photo to get started 📷</p>
+    <canvas
+  #canvas
+  [class.hidden]="!hasImage"
+  [class.compare]="compareMode"
+  (click)="onCanvasClick($event)"
+  (mousedown)="onMouseDown($event)"
+  (mousemove)="onMouseMove($event)"
+  (mouseup)="onMouseUp()"
+  (mouseleave)="onMouseUp()"
+  (touchstart)="onTouchStart($event)"
+  (touchmove)="onTouchMove($event)"
+  (touchend)="onMouseUp()"
+></canvas>
+  </main>
+</div>

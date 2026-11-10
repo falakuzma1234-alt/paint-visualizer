@@ -1,0 +1,24 @@
+<div class="page">
+  <h2>Kaise use karein?</h2>
+  <p class="sub">7 aasan steps mein apni wall ka naya rang dekho.</p>
+
+  <ol class="steps">
+    @for (s of steps; track $index) {
+      <li>
+        <b>{{ s.title }}</b>
+        <p>{{ s.text }}</p>
+      </li>
+    }
+  </ol>
+
+  <h3>Kuch tips</h3>
+  <ul class="tips">
+    @for (t of tips; track $index) { <li>{{ t }}</li> }
+  </ul>
+
+  <p class="disclaimer">
+    ⚠️ Final result lighting, screen calibration aur wall texture ki wajah se asli paint se alag dikh sakta hai.
+  </p>
+
+  <a routerLink="/studio" class="cta">Studio kholo</a>
+</div>
