@@ -1,18 +1,24 @@
 const multer = require('multer');
-const path = require('path');
-const crypto = require('crypto');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads/'),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname).toLowerCase();
-    cb(null, crypto.randomUUID() + ext);
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'paint-visualizer',
+    allowed_formats: ['jpg', 'jpeg', 'png'],
   },
 });
 
 const fileFilter = (req, file, cb) => {
   if (['image/jpeg', 'image/png'].includes(file.mimetype)) cb(null, true);
-  else cb(new Error('Only JPEG and PNG images are allowed'), false);
+  else cb(new Error('Only JPG or PNG files are allowed'));
 };
 
 module.exports = multer({
@@ -20,3 +26,5 @@ module.exports = multer({
   fileFilter,
   limits: { fileSize: 5 * 1024 * 1024 },
 });
+
+module.exports.cloudinary = cloudinary;

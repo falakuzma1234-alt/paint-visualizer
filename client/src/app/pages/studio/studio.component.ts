@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
-import { ProjectService, SERVER } from '../../services/project.service';
+import { ProjectService, imgSrc } from '../../services/project.service';
 import { ColorService } from '../../services/color.service';
 
 interface Point { x: number; y: number; }
@@ -95,7 +95,7 @@ export class StudioComponent implements OnInit {
             this.redraw();
           });
         };
-        img.src = SERVER + p.originalImageUrl;
+        img.src = imgSrc(p.originalImageUrl);
       },
       error: () => {
         alert('Could not load the project.');

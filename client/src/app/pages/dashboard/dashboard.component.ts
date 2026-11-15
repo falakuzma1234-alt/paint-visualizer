@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { ProjectService, SavedProject, SERVER } from '../../services/project.service';
+import { ProjectService, SavedProject, imgSrc } from '../../services/project.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +12,6 @@ import { ProjectService, SavedProject, SERVER } from '../../services/project.ser
 })
 export class DashboardComponent implements OnInit {
   private api = inject(ProjectService);
-  server = SERVER;
 
   projects = signal<SavedProject[]>([]);
   loading = signal(true);
@@ -35,10 +34,10 @@ export class DashboardComponent implements OnInit {
   }
 
   imgUrl(p: SavedProject) {
-    return this.server + (p.resultImageUrl || p.originalImageUrl);
+    return imgSrc(p.resultImageUrl || p.originalImageUrl);
   }
 
   downloadUrl(p: SavedProject) {
-    return this.server + (p.resultImageUrl || p.originalImageUrl);
+    return imgSrc(p.resultImageUrl || p.originalImageUrl);
   }
 }

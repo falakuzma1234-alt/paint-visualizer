@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../core/auth.service';
 
 export const SERVER = 'http://localhost:5000';
+export const imgSrc = (url?: string) =>
+  !url ? '' : url.startsWith('http') ? url : SERVER + url;
 
 export interface SavedProject {
   _id: string;
