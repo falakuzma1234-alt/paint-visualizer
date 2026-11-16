@@ -14,7 +14,7 @@ interface AuthResponse {
   user: User;
 }
 
-const API = 'http://localhost:5000/api/auth';
+const API = 'https://paint-visualizer-1.onrender.com/api/auth';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

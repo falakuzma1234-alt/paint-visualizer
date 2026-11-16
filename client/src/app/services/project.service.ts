@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../core/auth.service';
 
-export const SERVER = 'http://localhost:5000';
+export const SERVER = 'https://paint-visualizer-1.onrender.com';
 export const imgSrc = (url?: string) =>
   !url ? '' : url.startsWith('http') ? url : SERVER + url;
 
