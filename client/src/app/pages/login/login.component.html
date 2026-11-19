@@ -15,13 +15,13 @@
 
     @if (error) { <p class="error">{{ error }}</p> }
 
-    <button type="submit" class="primary">
-      {{ mode === 'login' ? 'Login' : 'Register' }}
+    <button type="submit" class="primary" [disabled]="loading">
+      {{ loading ? 'Please wait...' : (mode === 'login' ? 'Login' : 'Register') }}
     </button>
 
     <p class="switch">
-      {{ mode === 'login' ? 'New user?' : 'Already have an account? }}
-      <a (click)="switchMode()">{{ mode === 'login' ? 'Register' : 'Login' }}</a>
+      {{ mode === 'login' ? 'New user?' : 'Already have an account?' }}
+      <a (click)="switchMode()">{{ mode === 'login' ? 'Register' : 'Log in' }}</a>
     </p>
   </form>
 </div>

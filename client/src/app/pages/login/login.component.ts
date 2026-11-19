@@ -46,7 +46,7 @@ export class LoginComponent {
       },
       error: (err) => {
         this.loading = false;
-        this.error = err.error?.message || 'Cannot connect to the server. Is the backend running?';
+        this.error = err.error?.message || 'Cannot connect to the server. Please try again in a minute.';
       },
     });
   }
