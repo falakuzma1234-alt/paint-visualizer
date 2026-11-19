@@ -4,7 +4,7 @@
   @if (loading()) {
     <p>Loading...</p>
   } @else if (!projects().length) {
-    <p>Abhi koi design save nahi hua. <a routerLink="/studio">Studio</a> mein banao!</p>
+    <p>You have no saved designs yet. <a routerLink="/studio">Studio</a> mein banao!</p>
   } @else {
     <div class="grid">
       @for (p of projects(); track p._id) {
